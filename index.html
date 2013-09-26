@@ -25,7 +25,7 @@
         <div id="container">
 			<div id="input">
 				<p id="greeting">Please enter a word or phrase up to 100 characters in length.  You may use a-z or a space in your entry. All capital letters will be converted to lower case.</p>
-				<form>
+				<form id="phrase_form">
 				<input id="user_entry" type="text" maxlength=100 pattern="[A-Za-z ]+" required />
 				<input id="submit" class="button" type="submit" />
 				</form>
@@ -33,7 +33,7 @@
 			
 			<div id="results">
 				<fieldset>
-					<p>Results go here.</p>
+					<p id="result_text">Results go here.</p>
 				</fieldset>
 			</div>
 		</div>
