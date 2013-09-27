@@ -24,11 +24,14 @@
         <!-- Add your site or application content here -->
         <div id="container">
 			<div id="input">
-				<p id="greeting">Please enter a word or phrase up to 100 characters in length.  You may use a-z or a space in your entry. All capital letters will be converted to lower case.</p>
+				<p id="greeting">Please enter a word or phrase up to 100 characters in length.  You may use a-z or a space in your entry. Only lowercase letters are permitted.</p>
 				<form id="phrase_form">
-				<input id="user_entry" type="text" maxlength=100 pattern="[A-Za-z ]+" required />
+				<input id="user_entry" type="text" maxlength=100 pattern="[a-z ]+" required />
 				<input id="submit" class="button" type="submit" />
 				</form>
+				
+			<div id="testing">
+				<button id="generate">Gene Seed</button>
 			</div>
 			
 			<div id="results">
