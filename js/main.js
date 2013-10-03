@@ -14,10 +14,12 @@ var evolution = {
 
 	userPhrase:'',
 	generation:1,
+	match:false,
 	alphaArray:"abcdefghijklmnopqrstuvwxyz ",
 	seedArray:[],
 	coupleOne:[],
 	coupleTwo:[],
+	
 	
 	getRandom: function(min,max) {
 		var number = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -28,15 +30,18 @@ var evolution = {
 		$('#results').html('<div><h2>The User Phrase is: '+this.userPhrase+'</h2></div>')
 		
 		for(var i=0;i<array.length;i++){
-				
+
+			//console.log('test '+array[i].value);
+	
 			$('#results').append('<div><p>'+array[i].name+':  '+array[i].value.join('')+', '+array[i].score+'</p></div>')
-			}
 			
-		/* if(array[i].value.join('') == this.userPhrase){
-			$('$results').append('<div><h2>MATCH!</h2></div>')
-			return false;
-				
-		} */
+			
+			if(array[i].value.join('') == this.userPhrase){
+				$('#results').append('<div><h2>MATCH!</h2></div>')
+				this.match = true;
+				return false;
+			}
+		}	
 		
 		
 			
@@ -124,6 +129,7 @@ var evolution = {
 	}, // ends matchMaker function
 	
 	breeder:function(couple){ // creates 'child' array based on value of couple passed by matchMaker function
+		if(this.match == false){
 		for(var i = 0;i<6;i++){ // set initial variables, six children per parent couple.
 			var child = [];
 			var stop = false;
@@ -150,14 +156,13 @@ var evolution = {
 				
 				
 				var inheritance = this.getRandom(1,100);
-				if(inheritance < 11){
+				if(inheritance < 31){
 					child.push(first);
-				}else if(inheritance < 21){
+				}else if(inheritance < 61){
 					child.push(second);
-				}else if(inheritance < 95){
+				}else if(inheritance < 97){
 					var range = this.getRandom(this.alphaArray.indexOf(first),this.alphaArray.indexOf(second));
 					child.push(this.alphaArray.charAt(range));
-					console.log('first '+first+'second '+second);
 				}else{
 					var mutation = this.getRandom(0,this.alphaArray.length);
 					child.push(this.alphaArray.charAt(mutation));
@@ -166,11 +171,11 @@ var evolution = {
 				// once inheritance has been carried out for all elements of value array from both parents, determines length of child array.  Similar to how character values are inherited.
 				if(!couple[0].value[j] && !couple[1].value[j]){
 					var inheritLength = this.getRandom(1,100)
-					if(inheritLength < 11){
+					if(inheritLength < 31){
 						child.splice(couple[0].value.length);
-					}else if(inheritLength < 21){
+					}else if(inheritLength < 61){
 						child.splice(couple[1].value.length);
-					}else if(inheritLength < 95){
+					}else if(inheritLength < 97){
 						var childLength = this.getRandom(couple[0].value.length,couple[1].value.length);
 						child.splice(childLength);
 					}else{
@@ -214,6 +219,7 @@ var evolution = {
 			this.matchMaker(this.seedArray);
 			this.seedArray=[]; // clears seedArray for next generation
 		}
+		} // ends match if
 	}, // ends breeder function
 	
 	Seed:function(name,value) {
