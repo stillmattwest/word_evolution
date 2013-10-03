@@ -19,6 +19,12 @@ var evolution = {
 	seedArray:[],
 	coupleOne:[],
 	coupleTwo:[],
+	mutations:0,
+	
+	mutationCounter:function(){
+		this.mutations++
+		console.log(this.mutations+' mutations');
+	},
 	
 	
 	getRandom: function(min,max) {
@@ -27,11 +33,10 @@ var evolution = {
 	},
 	
 	display: function(array){
+		
 		$('#results').html('<div><h2>The User Phrase is: '+this.userPhrase+'</h2></div>')
 		
 		for(var i=0;i<array.length;i++){
-
-			//console.log('test '+array[i].value);
 	
 			$('#results').append('<div><p>'+array[i].name+':  '+array[i].value.join('')+', '+array[i].score+'</p></div>')
 			
@@ -57,7 +62,7 @@ var evolution = {
 		if(difference < 0){
 			difference *= -1;
 		}	
-		var lengthScore = 100 - (5*difference);
+		var lengthScore = 100 - (6*difference);
 		return lengthScore;
 	},
 	
@@ -78,7 +83,7 @@ var evolution = {
 	},
 	
 	generator:function(number){ // makes 'number' of seed values for initial array
-	
+		
 		
 		for(var i=0;i<number;i++){
 			var seedling = [];
@@ -99,11 +104,12 @@ var evolution = {
 			return 0;
 		}); // sorts the seed array by score property
 		
-		console.log(this.alphaArray[0]);
-		console.log(this.alphaArray.indexOf('a'));
+		
 		
 		this.display(this.seedArray);
+		
 		this.matchMaker(this.seedArray);
+		
 		this.seedArray=[]; // clears seedArray for next generation
 		
 	},
@@ -122,6 +128,8 @@ var evolution = {
 				array.splice(chooser,1);
 			}
 		}
+		
+		
 		this.breeder(this.coupleOne);
 		this.breeder(this.coupleTwo);
 		
@@ -155,15 +163,16 @@ var evolution = {
 			// set inheritance rules
 				
 				
-				var inheritance = this.getRandom(1,100);
-				if(inheritance < 31){
+				var inheritance = this.getRandom(1,1000);
+				if(inheritance < 401){
 					child.push(first);
-				}else if(inheritance < 61){
+				}else if(inheritance < 801){
 					child.push(second);
-				}else if(inheritance < 97){
+				}else if(inheritance < 995){
 					var range = this.getRandom(this.alphaArray.indexOf(first),this.alphaArray.indexOf(second));
 					child.push(this.alphaArray.charAt(range));
 				}else{
+					this.mutationCounter();
 					var mutation = this.getRandom(0,this.alphaArray.length);
 					child.push(this.alphaArray.charAt(mutation));
 				}
@@ -171,11 +180,11 @@ var evolution = {
 				// once inheritance has been carried out for all elements of value array from both parents, determines length of child array.  Similar to how character values are inherited.
 				if(!couple[0].value[j] && !couple[1].value[j]){
 					var inheritLength = this.getRandom(1,100)
-					if(inheritLength < 31){
+					if(inheritLength < 41){
 						child.splice(couple[0].value.length);
-					}else if(inheritLength < 61){
+					}else if(inheritLength < 81){
 						child.splice(couple[1].value.length);
-					}else if(inheritLength < 97){
+					}else if(inheritLength < 99){
 						var childLength = this.getRandom(couple[0].value.length,couple[1].value.length);
 						child.splice(childLength);
 					}else{
@@ -207,7 +216,7 @@ var evolution = {
 		// if seedArray has full allotment of 12 children then sort and display array, and feed into matchmaker function for next generation
 		
 		if(this.seedArray.length === 12){
-			alert('display new generation '+this.generation); // temporary button
+			alert('Evolve'); // temporary button
 			this.seedArray.sort(function(a, b){
 				if(a.score < b.score)
 					return 1;
@@ -216,7 +225,11 @@ var evolution = {
 				return 0;
 				}); // sorts the seed array by score property
 			this.display(this.seedArray);
+			if(this.generation<4200){
 			this.matchMaker(this.seedArray);
+			}else{
+				return;
+			}
 			this.seedArray=[]; // clears seedArray for next generation
 		}
 		} // ends match if
