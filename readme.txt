@@ -2,8 +2,8 @@ Word Evolution
 
 The function of this JavaScript app is as follows:
 
-	1) The user will enter a random word or phrase up to 200 characters long.  This can be comprised of any letter, numbers from 1-10, or a space.  
-	2) The app will then generate ten random 'phrases' from 1 - 200 characters in length.  Each phrase will be comprised of a random selection of characters of the same types as the user given phrase.
+	1) The user will enter a random word or phrase up to 100 characters long.  This can be comprised of any combination of letters and spaces.
+	2) The app will then generate ten random 'phrases' from 1 - 100 characters in length.  Each phrase will be comprised of a random selection of characters of the same types as the user given phrase.
 	3) The app will then compare these random phrases to the user's phrase, and assign a score as follows.
 	
 			Length Score = 200 - the difference between the random length and the user length.

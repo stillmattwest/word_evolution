@@ -18,9 +18,17 @@ textarea {
     color: #222;
 }
 
-body {
+html{
+	height:100%;
+	width:100%;
+}
+
+body{
+	height:100%;
+	width:100%;
     font-size: 1em;
     line-height: 1.4;
+	font-family:"Verdana","Tahoma",sans-serif;
 }
 
 /*
@@ -58,6 +66,7 @@ hr {
 
 img {
     vertical-align: middle;
+	width:100%;
 }
 
 /*
@@ -93,15 +102,98 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+#container{
+	height:100%;
+	color:white;
+	background-image: url('../img/evolution_bg.jpg');
+	background-size: cover;
+	background-repeat:no-repeat;
+	background-attachment: fixed;
+	background-position:center;
+	overflow:hidden;
+}
+
+#page_title{
+	font-weight:bold;
+	font-size:3em;
+	text-shadow: #434546 6px 4px 2px;
+	-webkit-text-stroke-color:black;
+	-webkit-text-stroke-width:2px;
+	margin-left:1%;
+
+}
+
+#page_title > p{
+	padding:0;
+	line-height:0;
+	margin-top:3%;
+}
+
+#main{
+	width:80%;
+	height:70%;
+	margin:auto;
+	opacity:.8;
+	background-color:white;
+	color:black;
+}
+
+#main_head{
+	width:100%;
+	height:15%;
+	background-color:Black;
+	color:white;
+}
+
+#results{
+	width:80%;
+	height:80%;
+	overflow:hidden;
+	margin:auto;
+}
+
+#buttons {
+	position:fixed; bottom:2%; right:5%;
+	overflow:auto;
+	z-index:2;
+	text-align:center;
+
+}
+
+
+ul > li {
+	display:inline-block;
+	text-align:center;
+	margin:auto;
+}
+
+button, .button {
+
+	background-color:#f89b30;
+	color:white;
+	font-size:2em;
+	padding:.25em;
+	font-weight:bold;
+}
 
 
 
+button:hover{
+	border:.1em solid white;
+	
+}
 
+button:active {
+	border-style:inset;
+}
 
+#submit{
+	font-size:1.25em;
+}
 
-
-
-
+#phrase_form {
+	padding:1em;
+}
 
 
 

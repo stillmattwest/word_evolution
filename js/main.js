@@ -2,12 +2,17 @@
 
 $(document).ready(function(){
 
+	$('#main').hide();
+	
+	$('#start').click(function(){
+		$('#main').show('slow')
+	});
+
 	$('#phrase_form').submit(function(){
 		
 		evolution.userPhrase = document.getElementById("user_entry").value;
 		evolution.generator(12);
 		return false; // prevents submit from reloading page and reverting phrase text
-	
 	}); // ends submit.click
 
 var evolution = {
@@ -32,7 +37,7 @@ var evolution = {
 		return number;
 	},
 	
-	display: function(array){
+	display: function(array){ // displays seeds and also checks for a match to user phrase
 		
 		$('#results').html('<div><h2>The User Phrase is: '+this.userPhrase+'</h2></div>')
 		
@@ -206,7 +211,7 @@ var evolution = {
 			
 			if(this.seedArray.length > 5){ // looking for existing children in seedArray
 				var childName = 'gen'+this.generation+'seed'+(6+i);
-				this.seedArray[(6+i)] = new this.Seed(childName,child);
+				this.seedArray[(6+i)] = new this.Seed(childName,child); // allows for a unique number for each seed
 			}else{
 			var childName = 'gen'+this.generation+'seed'+i;
 			this.seedArray[i] = new this.Seed(childName,child);
@@ -225,7 +230,7 @@ var evolution = {
 				return 0;
 				}); // sorts the seed array by score property
 			this.display(this.seedArray);
-			if(this.generation<4200){
+			if(this.generation<4200){ // sets limit of 4200 tries to evolve a match.  This is to avoid call stack issues
 			this.matchMaker(this.seedArray);
 			}else{
 				return;
