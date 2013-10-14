@@ -136,6 +136,10 @@ textarea {
 	opacity:.8;
 	background-color:white;
 	color:black;
+	overflow:auto;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	box-sizing:border-box;
 }
 
 #main_head{
@@ -143,13 +147,55 @@ textarea {
 	height:15%;
 	background-color:Black;
 	color:white;
+	margin:0;
+}
+
+#content{
+	margin:0;
+	padding:0;
+	width:100%;
+	height:100%;
+	overflow:auto;
+	display:table;
+	
+}
+
+#content > li{
+	vertical-align:top;
+	overflow:hidden;
+	display:table-cell;
 }
 
 #results{
-	width:80%;
-	height:80%;
+	width:75%;
+	height:70%;
 	overflow:hidden;
 	margin:auto;
+	font-size:1em;
+}
+
+h2{
+	font-size:1.25em;
+}
+
+#counters{
+	background-color:gray;
+	width:25%;
+	height:100%;
+	max-height:100%;
+	margin:0;
+	border:0;
+	padding-right:0;
+	color:white;
+	font-weight:bold;
+	font-size:2em;
+	line-height:1em;
+	text-align:center;
+	overflow:hidden;
+}
+
+.count{
+	color:yellow;
 }
 
 #buttons {
@@ -163,9 +209,35 @@ textarea {
 
 ul > li {
 	display:inline-block;
-	text-align:center;
 	margin:auto;
+	max-height:100%;
+	
 }
+
+#seeds, #breeder_boxes{
+	text-align:center;
+}
+
+#seeds > li{
+	border:2px solid orange;
+	width:45%;
+	padding:1%;
+	font-size:.8em;
+	color:Blue;
+}
+
+#breeder_boxes > li{
+	border:2px solid orange;
+	width:45%;
+	padding:1%;
+	font-size:.8em;
+	font-weight:bold;
+	
+}
+
+/* #breeders{
+	background-color:#2d2e2f;
+} */
 
 button, .button {
 
@@ -174,6 +246,8 @@ button, .button {
 	font-size:2em;
 	padding:.25em;
 	font-weight:bold;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 
@@ -192,7 +266,11 @@ button:active {
 }
 
 #phrase_form {
-	padding:1em;
+	margin:0;
+	padding:0;
+	padding-top:5px;
+	padding-left:1em;
+	
 }
 
 
