@@ -131,24 +131,32 @@ textarea {
 
 #main{
 	width:80%;
-	height:70%;
+	height:75%;
 	margin:auto;
 	opacity:.8;
 	background-color:white;
 	color:black;
-	overflow:auto;
+	overflow:hidden;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	box-sizing:border-box;
 }
 
 #main_head{
+	display:inline-block;
+	vertical-align:top;
 	width:100%;
-	height:15%;
+	height:auto;
 	background-color:Black;
 	color:white;
 	margin:0;
 }
+
+#gen_count{
+	color:yellow;
+	margin-left:15%;
+}
+
 
 #content{
 	margin:0;
@@ -199,7 +207,7 @@ h2{
 }
 
 #buttons {
-	position:fixed; bottom:2%; right:5%;
+	position:fixed; bottom:1%; right:5%;
 	overflow:auto;
 	z-index:2;
 	text-align:center;
@@ -243,7 +251,7 @@ button, .button {
 
 	background-color:#f89b30;
 	color:white;
-	font-size:2em;
+	font-size:1.5em;
 	padding:.25em;
 	font-weight:bold;
 	-moz-border-radius: 5px;

@@ -11,33 +11,28 @@ $('#main').hide();
 	});
 	
 	$('#slower').click(function(){
-		evolution.speed*=1.5});
+		speed*=1.5});
 	
 	$('#faster').click(function(){
-		evolution.speed/=1.5});
+		speed/=1.5});
 
 	$('#phrase_form').submit(function(){
 		
-		evolution.userPhrase = document.getElementById("user_entry").value;
+		userPhrase = document.getElementById("user_entry").value;
 		generator(12);
 		event.preventDefault(); // prevents submit from reloading page and reverting phrase text
 	}); // ends submit.click
 	
-	var test = 'fml';
-
-var evolution = {
-	userPhrase:'',
-	generation:0,
-	match:false,
-	alphaArray:"abcdefghijklmnopqrstuvwxyz ",
-	seedArray:[],
-	coupleOne:[],
-	coupleTwo:[],
-	mutations:0,
-	speed:1000
+	var userPhrase='';
+	var generation=0;
+	var match=false;
+	var alphaArray="abcdefghijklmnopqrstuvwxyz ";
+	var seedArray=[];
+	var coupleOne=[];
+	var coupleTwo=[];
+	var mutations=0;
+	var speed=1000;
 	
-	
-}; // ends evolution object
 
 	
 	
@@ -47,7 +42,7 @@ var evolution = {
 	};	
 	
 	var lengthScore = function(array){
-		var difference = ((evolution.userPhrase.length -1) - (array.length -1));
+		var difference = ((userPhrase.length -1) - (array.length -1));
 		if(difference < 0){
 			difference *= -1;
 		}	
@@ -57,9 +52,9 @@ var evolution = {
 	
 	var charScore = function(array){
 		var charScore = 0;
-		for(var i=0;i<evolution.userPhrase.length && i<array.length;i++){
-			var userChar = evolution.alphaArray.indexOf(evolution.userPhrase.charAt(i));
-			var seedChar = evolution.alphaArray.indexOf(array[i]);
+		for(var i=0;i<userPhrase.length && i<array.length;i++){
+			var userChar = alphaArray.indexOf(userPhrase.charAt(i));
+			var seedChar = alphaArray.indexOf(array[i]);
 			var temp = (userChar - seedChar);
 			if(temp<0){
 				temp *= -1;
@@ -83,22 +78,22 @@ var evolution = {
 			var seedling = [];
 			var length = getRandom(1,50);
 			for(var j=0;j<length;j++){  //creates seedling
-				var random = getRandom(0,evolution.alphaArray.length);
-				seedling.push(evolution.alphaArray.charAt(random));
+				var random = getRandom(0,alphaArray.length);
+				seedling.push(alphaArray.charAt(random));
 			} // end seedling creation loop
-			var seedName = 'gen'+evolution.generation+'seed'+i;
-			evolution.seedArray[i] = new Seed(seedName,seedling);
+			var seedName = 'gen'+generation+'seed'+i;
+			seedArray[i] = new Seed(seedName,seedling);
 		} // ends seed generation
 		
 	
-		checkMatch(evolution.seedArray); // checks for match to phrase (
+		checkMatch(seedArray); // checks for match to phrase (
 		
 		$('#breeder_boxes').fadeIn('slow');
 		
 	};
 	
 	var sortSeeds = function(){ // might not need this as a separate function
-		evolution.seedArray.sort(function(a, b){
+		seedArray.sort(function(a, b){
 			if(a.score < b.score)
 				return 1;
 			if(a.score > b.score)
@@ -112,10 +107,10 @@ var evolution = {
 		console.log('from checkMatch '+array);
 		for(var i=0;i<array.length;i++){
 		
-			if(array[i].value.join('') == evolution.userPhrase){
+			if(array[i].value.join('') == userPhrase){
 				console.log('MATCH: '+array[i].value.join(''));
 				$('#seeds').html('<h2>MATCH</h2></br><h2>'+array[i].value.join('')+'</h2>');
-				evolution.match = true;
+				match = true;
 				return false;
 			}else{
 				
@@ -124,7 +119,7 @@ var evolution = {
 			
 		} // end for loop
 		
-		evolution.generation++; // this might need to move
+		generation++; // this might need to move
 		
 		displaySeeds(array);
 		
@@ -136,29 +131,29 @@ var evolution = {
 		console.log('getting to matchMaker');
 		
 		array.splice(4);
-		evolution.coupleOne=[]; //clears C1 for this generation
-		evolution.coupleTwo=[]; //clears C2 for this generation
+		coupleOne=[]; //clears C1 for this generation
+		coupleTwo=[]; //clears C2 for this generation
 		
 		while(array.length > 0){
 			var chooser = getRandom(0,(array.length-1));
 			if(array.length < 3){
-				evolution.coupleOne.push(array[chooser]);
+				coupleOne.push(array[chooser]);
 				array.splice(chooser,1);
 			}else {
-				evolution.coupleTwo.push(array[chooser]);
+				coupleTwo.push(array[chooser]);
 				array.splice(chooser,1);
 			}
 			
 		}
-		breeder(evolution.coupleOne);
-		breeder(evolution.coupleTwo);
-		evolution.seedArray=[];
+		breeder(coupleOne);
+		breeder(coupleTwo);
+		//seedArray=[];
 
 	}; // ends matchMaker function
 	
 	
 	var breeder = function(couple){ // creates 'child' array based on value of couple passed by matchMaker function
-		if(evolution.match == false){
+		if(match == false){
 		for(var i = 0;i<6;i++){ // set initial variables, six children per parent couple.
 			var child = [];
 			var stop = false;
@@ -189,12 +184,12 @@ var evolution = {
 				}else if(inheritance < 801){
 					child.push(second);
 				}else if(inheritance < 992){
-					var range = getRandom(evolution.alphaArray.indexOf(first),evolution.alphaArray.indexOf(second));
-					child.push(evolution.alphaArray.charAt(range));
+					var range = getRandom(alphaArray.indexOf(first),alphaArray.indexOf(second));
+					child.push(alphaArray.charAt(range));
 				}else{
-					evolution.mutations++;
-					var mutation = getRandom(0,evolution.alphaArray.length);
-					child.push(evolution.alphaArray.charAt(mutation));
+					mutations++;
+					var mutation = getRandom(0,alphaArray.length);
+					child.push(alphaArray.charAt(mutation));
 				}
 				
 				// once inheritance has been carried out for all elements of value array from both parents, determines length of child array.  Similar to how character values are inherited.
@@ -211,7 +206,7 @@ var evolution = {
 						var lengthMutation = getRandom(-5,5);
 						if(lengthMutation>0){
 							for(var k=0;k<lengthMutation;k++){
-								child.push(evolution.alphaArray.charAt(getRandom(0,evolution.alphaArray.length)));
+								child.push(alphaArray.charAt(getRandom(0,alphaArray.length)));
 							}
 						}else{
 							child.splice(child.length + lengthMutation);
@@ -223,26 +218,26 @@ var evolution = {
 				j++;
 			} // ends while loop
 		
-		if(evolution.seedArray.length > 5){ // looking for existing children in seedArray
-				var childName = 'gen'+evolution.generation+'seed'+(6+i);
-				evolution.seedArray[(6+i)] = new Seed(childName,child); // allows for a unique number for each seed
+		if(seedArray.length > 5){ // looking for existing children in seedArray
+				var childName = 'gen'+generation+'seed'+(6+i);
+				seedArray[(6+i)] = new Seed(childName,child); // allows for a unique number for each seed
 				
 			}else{
-			var childName = 'gen'+evolution.generation+'seed'+i;
-			evolution.seedArray[i] = new Seed(childName,child);
+			var childName = 'gen'+generation+'seed'+i;
+			seedArray[i] = new Seed(childName,child);
 		
 			}
 			
 		} // ends for loop that sets number of children
 		
 		// if seedArray has full allotment of 12 children then sort and feed into checkMatch function for next generation
-			console.log('array length '+evolution.seedArray.length);
-			if(evolution.seedArray.length === 12){
+			console.log('array length '+seedArray.length);
+			if(seedArray.length === 12){
 			
-				if(evolution.generation<4200){ // sets limit of 4200 tries to evolve a match.  This is to avoid call stack issues
-			//console.log(evolution.seedArray[5]);
-				console.log(evolution.seedArray);
-				checkMatch(evolution.seedArray);
+				if(generation<4200){ // sets limit of 4200 tries to evolve a match.  This is to avoid call stack issues
+			//console.log(seedArray[5]);
+				console.log(seedArray);
+				checkMatch(seedArray);
 				}else{
 				return;
 				}
@@ -252,8 +247,8 @@ var evolution = {
 
 	
 	var displaySeeds = function(array){
-		console.log(evolution.seedArray);
-		if(evolution.generation==1){
+		console.log('from display 1'+seedArray);
+		if(generation==1){
 			$('#seeds').html('');
 		}else{
 			// $('#seeds li').html('&nbsp');
@@ -264,39 +259,37 @@ var evolution = {
 			for(var i=0;i<array.length;i++){
 				$('#seeds').prepend('<li id="'+array[i].name+'">'+array[i].value.join('')+'</li>').css('color','white');
 			}
-			$('#seeds li').animate({color:"blue"},evolution.speed/2);
-		},evolution.speed);
+			$('#seeds li').animate({color:"blue"},speed/2);
+		},speed);
 		
 		setTimeout(function(){ // fadeout loser seeds, fade out old breeders
 			
 			for(j=0;j<array.length;j++){
 				if(j<4){
-					$('#breeder'+j).animate({color:"white"},evolution.speed/2);
+					$('#breeder'+j).animate({color:"white"},speed/2);
 				}else{
-					$('#'+array[j].name).animate({color:"white"},evolution.speed/2);
+					$('#'+array[j].name).animate({color:"white"},speed/2);
 				}
 			}
-		},evolution.speed*2);
+		},speed*2);
 		
 		setTimeout(function(){ // fade in new breeders fade out winner seeds
 			sortSeeds();
-			var seedArray=evolution.seedArray;
 			for(k=0;k<seedArray.length;k++){
 				if(k<4){
 					$('#breeder'+k).html(seedArray[k].value);
-					$('#breeder'+k).animate({color:"green"},evolution.speed/2);
+					$('#breeder'+k).animate({color:"green"},speed/2);
 				}
 				
 			}
-			$('#seeds li').animate({color:"white"},evolution.speed/2);
-		},evolution.speed*3);
+			$('#seeds li').animate({color:"white"},speed/2);
+		},speed*3);
 		
 		setTimeout(function(){ //call matchMaker function
-			console.log('from displaySeeds '+evolution.seedArray); 
-			console.log(test);
-			matchMaker(evolution.seedArray);
+			console.log('from display 2 '+seedArray); 
+			matchMaker(seedArray);
 			
-		},evolution.speed*4);
+		},speed*4);
 	}; // ends displaySeeds function
 	
 	

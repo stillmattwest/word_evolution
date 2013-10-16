@@ -30,11 +30,13 @@
 			
 			<div id="main">
 				<div id="main_head">
-					<form id="phrase_form">
+				<ul>
+					<li><form id="phrase_form">
 						<input id="user_entry" type="text" maxlength=50 pattern="[a-z ]+" required />
 						<input id="submit" class="button" value="evolve" type="submit"></input>
-					</form>
-				</div>
+					</form></li>
+				<li><h2 id="gen_count">Generations: </h2></div>
+				</li>
 				<div id = "breeders">
 					<ul id = "breeder_boxes">
 						<li id = "breeder0">&nbsp</li>
@@ -51,9 +53,9 @@
 			
 			<ul id="buttons">
 				<li><button id="start">start</button></li>
-				<li><button id="what" class="secondary">what this is</button></li>
+				<li><button id="faster" class="secondary">faster</button></li>
+				<li><button id="slower" class="secondary">slower</button></li>
 				<li><button id="how" class="secondary">how it works</button></li>
-				<li><button id="about" class="secondary">about evolution</button></li>
 			</ul>
 		</div>
 
