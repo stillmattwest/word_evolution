@@ -11,10 +11,10 @@ $('#main').hide();
 	});
 	
 	$('#slower').click(function(){
-		evolution.speed*=1.5});
+		evolution.speed*=2});
 	
 	$('#faster').click(function(){
-		evolution.speed/=1.5});
+		evolution.speed/=2});
 
 	$('#phrase_form').submit(function(){
 		
@@ -23,7 +23,7 @@ $('#main').hide();
 		event.preventDefault(); // prevents submit from reloading page and reverting phrase text
 	}); // ends submit.click
 	
-	var test = 'fml';
+	
 
 var evolution = {
 	userPhrase:'',
@@ -34,7 +34,7 @@ var evolution = {
 	coupleOne:[],
 	coupleTwo:[],
 	mutations:0,
-	speed:1000
+	speed:500
 	
 	
 }; // ends evolution object
@@ -64,7 +64,16 @@ var evolution = {
 			if(temp<0){
 				temp *= -1;
 			}
-			temp = (27-(2*temp));
+		
+			temp = (27-(temp));
+			
+			if(temp > 26){
+				temp*=5;
+			}else if(temp > 24){
+				temp*=3;
+			}else{
+				temp*=2;
+			}
 			charScore += temp;
 		}
 		
@@ -109,32 +118,30 @@ var evolution = {
 	};
 	
 	var checkMatch = function(array){ // looks for match and triggers display function
-		console.log('from checkMatch '+array);
+		('from checkMatch '+array);
 		for(var i=0;i<array.length;i++){
 		
 			if(array[i].value.join('') == evolution.userPhrase){
-				console.log('MATCH: '+array[i].value.join(''));
-				$('#seeds').html('<h2>MATCH</h2></br><h2>'+array[i].value.join('')+'</h2>');
+				$('#breeders').html('<h2>MATCH</h2></br><h2>'+array[i].value.join('')+'</h2>');
 				evolution.match = true;
+				$('#match').html('match:100%')
+				$('#breeders h2').animate({ fontSize:"3em"},1000);
 				return false;
 			}else{
-				
+				// might be able to put skip generation function in here
 					
 			} // end match check if
 			
 		} // end for loop
 		
 		evolution.generation++; // this might need to move
-		
+		$('#gen_count').html('Generation:'+evolution.generation);
 		displaySeeds(array);
 		
 		
 	}; // ends checkMatch
 	
 	var matchMaker = function(array){ // selects four highest scoring phrases and sends them to breeder.
-		//sortSeeds(); shouldn't need this
-		console.log('getting to matchMaker');
-		
 		array.splice(4);
 		evolution.coupleOne=[]; //clears C1 for this generation
 		evolution.coupleTwo=[]; //clears C2 for this generation
@@ -152,7 +159,7 @@ var evolution = {
 		}
 		breeder(evolution.coupleOne);
 		breeder(evolution.coupleTwo);
-		evolution.seedArray=[];
+		//evolution.seedArray=[];
 
 	}; // ends matchMaker function
 	
@@ -184,11 +191,11 @@ var evolution = {
 				
 				
 				var inheritance = getRandom(1,1000);
-				if(inheritance < 401){
+				if(inheritance < 400){
 					child.push(first);
-				}else if(inheritance < 801){
+				}else if(inheritance < 800){
 					child.push(second);
-				}else if(inheritance < 992){
+				}else if(inheritance < 970){
 					var range = getRandom(evolution.alphaArray.indexOf(first),evolution.alphaArray.indexOf(second));
 					child.push(evolution.alphaArray.charAt(range));
 				}else{
@@ -204,7 +211,7 @@ var evolution = {
 						child.splice(couple[0].value.length);
 					}else if(inheritLength < 81){
 						child.splice(couple[1].value.length);
-					}else if(inheritLength < 99){
+					}else if(inheritLength < 97){
 						var childLength = getRandom(couple[0].value.length,couple[1].value.length);
 						child.splice(childLength);
 					}else{
@@ -236,12 +243,12 @@ var evolution = {
 		} // ends for loop that sets number of children
 		
 		// if seedArray has full allotment of 12 children then sort and feed into checkMatch function for next generation
-			console.log('array length '+evolution.seedArray.length);
+			('array length '+evolution.seedArray.length);
 			if(evolution.seedArray.length === 12){
 			
 				if(evolution.generation<4200){ // sets limit of 4200 tries to evolve a match.  This is to avoid call stack issues
-			//console.log(evolution.seedArray[5]);
-				console.log(evolution.seedArray);
+			//(evolution.seedArray[5]);
+				(evolution.seedArray);
 				checkMatch(evolution.seedArray);
 				}else{
 				return;
@@ -252,7 +259,7 @@ var evolution = {
 
 	
 	var displaySeeds = function(array){
-		console.log(evolution.seedArray);
+		(evolution.seedArray);
 		if(evolution.generation==1){
 			$('#seeds').html('');
 		}else{
@@ -268,7 +275,7 @@ var evolution = {
 		},evolution.speed);
 		
 		setTimeout(function(){ // fadeout loser seeds, fade out old breeders
-			
+			sortSeeds();
 			for(j=0;j<array.length;j++){
 				if(j<4){
 					$('#breeder'+j).animate({color:"white"},evolution.speed/2);
@@ -276,14 +283,23 @@ var evolution = {
 					$('#'+array[j].name).animate({color:"white"},evolution.speed/2);
 				}
 			}
-		},evolution.speed*2);
+			// get percentage match
+			
+			var userScore=(lengthScore(evolution.userPhrase)+charScore(evolution.userPhrase));
+		
+			var matchPercentage = (((evolution.seedArray[0].score) / userScore)*100).toFixed(2);
+			
+			//var matchPercentage = rawPercentage.substring(0,2);
+			
+			$('#match').html('Match: '+matchPercentage+'%');
+			
+		},evolution.speed*2);	
 		
 		setTimeout(function(){ // fade in new breeders fade out winner seeds
-			sortSeeds();
-			var seedArray=evolution.seedArray;
-			for(k=0;k<seedArray.length;k++){
+			
+			for(k=0;k<evolution.seedArray.length;k++){
 				if(k<4){
-					$('#breeder'+k).html(seedArray[k].value);
+					$('#breeder'+k).html(evolution.seedArray[k].value);
 					$('#breeder'+k).animate({color:"green"},evolution.speed/2);
 				}
 				
@@ -292,8 +308,7 @@ var evolution = {
 		},evolution.speed*3);
 		
 		setTimeout(function(){ //call matchMaker function
-			console.log('from displaySeeds '+evolution.seedArray); 
-			console.log(test);
+			('from displaySeeds '+evolution.seedArray); 
 			matchMaker(evolution.seedArray);
 			
 		},evolution.speed*4);

@@ -46,6 +46,28 @@ var evolution = {
 		return number;
 	};	
 	
+	var shuffle = function(array) { // Fisher-Yates algorithm
+		var currentIndex = array.length
+		, temporaryValue
+		, randomIndex
+		;
+
+	// While there remain elements to shuffle...
+		while (0 !== currentIndex) {
+
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+	
 	var lengthScore = function(array){
 		var difference = ((evolution.userPhrase.length -1) - (array.length -1));
 		if(difference < 0){
@@ -67,8 +89,10 @@ var evolution = {
 		
 			temp = (27-(temp));
 			
-			if(temp > 22){
+			if(temp > 26){
 				temp*=5;
+			}else if(temp > 24){
+				temp*=3;
 			}else{
 				temp*=2;
 			}
@@ -120,10 +144,10 @@ var evolution = {
 		for(var i=0;i<array.length;i++){
 		
 			if(array[i].value.join('') == evolution.userPhrase){
-				$('#breeders').html('<h2>MATCH</h2></br><h2>'+array[i].value.join('')+'</h2>');
+				$('#breeders').html('<h2>MATCH</h2></br><h2>'+array[i].value.join('')+'</h2>'+'<h2>('+array[i].name+')</h2>');
 				evolution.match = true;
 				$('#match').html('match:100%')
-				$('#breeders h2').animate({ fontSize:"3em"},1000);
+				$('#breeders h2').animate({ fontSize:"2.5em"},1000);
 				return false;
 			}else{
 				// might be able to put skip generation function in here
@@ -133,7 +157,7 @@ var evolution = {
 		} // end for loop
 		
 		evolution.generation++; // this might need to move
-		$('#gen_count').html('Generation:'+evolution.generation);
+		$('#gen_count').html('generation:'+evolution.generation);
 		displaySeeds(array);
 		
 		
@@ -164,7 +188,7 @@ var evolution = {
 	
 	var breeder = function(couple){ // creates 'child' array based on value of couple passed by matchMaker function
 		if(evolution.match == false){
-		for(var i = 0;i<6;i++){ // set initial variables, six children per parent couple.
+		for(var i = 0;i<1200;i++){ // set initial variables, sixty children per parent couple.
 			var child = [];
 			var stop = false;
 			var j = 0;
@@ -209,7 +233,7 @@ var evolution = {
 						child.splice(couple[0].value.length);
 					}else if(inheritLength < 81){
 						child.splice(couple[1].value.length);
-					}else if(inheritLength < 99){
+					}else if(inheritLength < 98){
 						var childLength = getRandom(couple[0].value.length,couple[1].value.length);
 						child.splice(childLength);
 					}else{
@@ -228,9 +252,9 @@ var evolution = {
 				j++;
 			} // ends while loop
 		
-		if(evolution.seedArray.length > 5){ // looking for existing children in seedArray
+		if(evolution.seedArray.length > 1199){ // looking for existing children in seedArray
 				var childName = 'gen'+evolution.generation+'seed'+(6+i);
-				evolution.seedArray[(6+i)] = new Seed(childName,child); // allows for a unique number for each seed
+				evolution.seedArray[(1200+i)] = new Seed(childName,child); // allows for a unique number for each seed
 				
 			}else{
 			var childName = 'gen'+evolution.generation+'seed'+i;
@@ -240,13 +264,16 @@ var evolution = {
 			
 		} // ends for loop that sets number of children
 		
-		// if seedArray has full allotment of 12 children then sort and feed into checkMatch function for next generation
+		// if seedArray has full allotment of 2400 children then sort and feed into checkMatch function for next generation
 			('array length '+evolution.seedArray.length);
-			if(evolution.seedArray.length === 12){
-			
+			if(evolution.seedArray.length === 2400){
+				
 				if(evolution.generation<4200){ // sets limit of 4200 tries to evolve a match.  This is to avoid call stack issues
 			//(evolution.seedArray[5]);
-				(evolution.seedArray);
+				//(evolution.seedArray);
+				sortSeeds();
+				evolution.seedArray.splice(12); // select best 12 seeds
+				shuffle(evolution.seedArray); // shuffles best seeds for display purposes
 				checkMatch(evolution.seedArray);
 				}else{
 				return;
