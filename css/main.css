@@ -152,9 +152,11 @@ textarea {
 	margin:0;
 }
 
-#gen_count{
+.counters{
 	color:yellow;
-	margin-left:15%;
+	padding-left:10px;
+	padding-right:25px;
+	
 }
 
 
@@ -185,6 +187,13 @@ textarea {
 h2{
 	font-size:1.25em;
 }
+
+#breeders > h2{
+	font-size:2em;
+	text-align:center;
+	color:black;
+}
+	
 
 #counters{
 	background-color:gray;
