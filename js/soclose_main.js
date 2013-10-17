@@ -333,13 +333,11 @@ var evolution = {
 	// begin setTimeout chain
 	
 		setTimeout(function(){ // fade in seeds
-			$('.gen'+(evolution.generation-1)).hide(); // clears last generation seeds from display
 			for(var i=0;i<array.length;i++){
-				$('#seeds').prepend('<li id="'+array[i].name+'" class="gen'+evolution.generation+'">'+array[i].value.join('')+'</li>').css('color','white');
+				$('#seeds').prepend('<li id="'+array[i].name+'">'+array[i].value.join('')+'</li>').css('color','white');
 			}
 			$('#seeds li').animate({color:"blue"},evolution.speed/2);
 		},evolution.speed);
-			
 		
 		setTimeout(function(){ // fadeout loser seeds, fade out old breeders
 			sortSeeds();

@@ -142,6 +142,29 @@ textarea {
 	box-sizing:border-box;
 }
 
+#howitworks{
+	width:70%;
+	height:80%;
+	z-index:3;
+	margin-left: -35%;
+	left:50%;
+	background-color:#f2f994;
+	color:black;
+	overflow:auto;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	box-sizing:border-box;
+	padding:1em;
+	position:absolute;
+}
+
+.quote{
+	font-style:italic;
+	padding-left:15%;
+	padding-right:15%;
+}
+	
+
 #main_head{
 	display:inline-block;
 	vertical-align:top;

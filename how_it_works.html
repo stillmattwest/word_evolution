@@ -1,0 +1,23 @@
+<h2>How Word Evolution Works</h2>
+
+<p>A common argument against the idea that all living species on Earth have arisen via the process of evolution goes something like this:
+
+<p class="quote">"It is impossible that the living things we see around us could be created by random chance, that would be like blowing up a library and having the pieces form the complete works of Shakespeare."</p>
+
+<p>The problem with this argument is that it ignores the principal of <em>selection</em> - also known as 'survival of the fittest' - and the effect it can have over time.</p>
+
+<p>Word Evolution is meant to illustrate this principal, and show the power of its effects over even a small number of generations.  In the spirit of the original argument it does this starting with a random collection of letters.  The goal is to match a user-input 50 character string instead of The Bard's complete works, but the same principals could be used for any amount of text, given enough time.</p>
+
+<p>To begin, a user enters a word or phrase into a text box, and Word Evolution generates twelve random text strings.  Like the user phrase,  each of these strings is between 1 and 50 characters in length, and made up of any combination of lower case letters or spaces.  Since these strings are random, the odds of one of them happening to match the user phrase are very low, assuming the phrase is longer than just a few characters.</p></br
+
+<p>However, some of these random strings - or "seeds" as they are called in Word Evolution - are <em>more like</em> the user phrase than others.  Word Evolution compares each of them on a character by character basis, scoring each on how close their characters are to the ones in the target phrase, as well as by their comparative length.</p>
+
+<p>The top four scoring seeds are allowed to spread their "genetic code" to the next generation, with their "genetic code" in this case being made up of the characters within their string.  The rest of the seeds die out with no offspring.  This is much how biological evolution works. Those most suited to their ecological niche survive long enough to pass their characteristics onto the next generation, and those less suited often do not.  Over time this can fundamentally change a species, or create a new species entirely.</p>
+
+<p>Once selected, the four remaining seeds are divided into two breeding couples, and their characters are passed onto their children according to an algorithm.  The seeds have no knowledge of the user phrase entered.  All they do is pass on their alphabetic "genes."  Sometimes a child seed inherits a character from one parent, sometimes from the other.  Sometimes it inherits something in-between the two values, and a small percentage of the time a mutation occurs and the result is a random character.</p>
+
+<p>The seeds are productive parents, with each couple spawning 1200 children.  Only the top twelve of the 2400 members of this new seed generation are shown on screen, and only the top four of these are allowed to spawn children of their own.</p>
+
+<p>Within just a few generations, you should see the new seeds begin to more closely resemble the target phrase.  This is due to the power of selection.  Only the seeds that most closely resemble the user phrase are allowed to survive and create offspring, and so inevitably some of their children are even <em>more</em> like that phrase, combining the most desirable traits of both parents. After a dozen or three generations, our seed "family" will have evolved to the point where one of them matches the target phrase letter for letter.  At this point the application will stop and the match will be shown, along with the name of the specific seed that matched the user input.</p>
+
+<p>Thanks for trying out my application, and for reading this far.  I hope you enjoyed it and / or found it useful. The source code is available on github <a href="https://github.com/slocodemonkey">HERE</a>, and everyone is free to use or modify it in any way they'd like.  If you make something cool out of it, please let me know so I can go check it out!</p>
